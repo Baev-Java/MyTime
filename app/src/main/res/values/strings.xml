@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MyTime</string>
+    <string name="some_id">Вход</string>
+    <string name="enter_email">Введите почту:</string>
+    <string name="enter_password">Введите пароль:</string>
+    <string name="btn_enter">Войти</string>
+    <string name="forthefirsttimehere">Впервые здесь?</string>
+    <string name="btn_registration">Зарегистрироваться</string>
+    <string name="btn_current">Активные</string>
+    <string name="btn_completed">Завершённые</string>
+    <string name="register">Регистрация</string>
+    <string name="name_purpose">Название</string>
+    <string name="desc_purpose">Описание</string>
+    <string name="add_purpose">Добавить цель</string>
+</resources>

@@ -1,0 +1,28 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MyTime" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+    <style name="main">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">#D9D9D9</item>
+    </style>
+    <style name="enter_email">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#AAB7C6</item>
+    </style>
+    <style name="enter_pswrd">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#AAB7C6</item>
+    </style>
+    <!-- styles.xml -->
+    <style name="register">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">#D9D9D9</item>
+    </style>
+
+
+
+    <style name="Theme.MyTime" parent="Base.Theme.MyTime" />
+</resources>
