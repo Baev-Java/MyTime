@@ -17,6 +17,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -24,16 +28,19 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText emailTextView, passwordTextView;
     private Button Btn;
     private ProgressBar progressbar;
+
     private FirebaseAuth mAuth;
     //String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_registration);
 
         // taking FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance();
+
 
 
         // initialising all views through id defined above
@@ -41,7 +48,7 @@ public class RegistrationActivity extends AppCompatActivity {
         passwordTextView = findViewById(R.id.passwd);
         Btn = findViewById(R.id.btn_finall_reg);
         progressbar = findViewById(R.id.progressbar);
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         // Set on Click Listener on Registration button
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,13 +101,29 @@ public class RegistrationActivity extends AppCompatActivity {
                             progressbar.setVisibility(View.GONE);
 
                             // if the user created intent to login activity
+
+                            String currentuser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+                            Map<String, Object> childData = new HashMap<>();
+                            childData.put("field1", "value1");
+                            childData.put("field2", "value2");
+
+
+                            db.collection("users")
+                                    .document(currentuser)
+                                    .collection("users_data");
+
+
                             Intent intent
                                     = new Intent(RegistrationActivity.this,
                                     BaseActivity.class);
                             startActivity(intent);
                         } else {
 
-                            // Registration failed
+                            // Registration failed-
                             Toast.makeText(
                                             getApplicationContext(),
                                             "Регистрация не удалась",

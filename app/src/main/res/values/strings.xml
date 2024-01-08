@@ -12,4 +12,6 @@
     <string name="name_purpose">Название</string>
     <string name="desc_purpose">Описание</string>
     <string name="add_purpose">Добавить цель</string>
+    <string name="how_cost_purpose">Сколько средств вы готовы затрачивать</string>
+    <string name="maggure_purpose">Мера для достижения</string>
 </resources>
