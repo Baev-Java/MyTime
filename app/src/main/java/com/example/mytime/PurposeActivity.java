@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +24,7 @@ public class PurposeActivity extends AppCompatActivity {
     private EditText measure_purpose;
     private EditText enter_cost_purpose;
     private ImageButton imageButton;
+    private AppCompatButton purp_btn;
 
 
     @Override
@@ -34,10 +36,7 @@ public class PurposeActivity extends AppCompatActivity {
         measure_purpose = findViewById(R.id.measure_purpose);
         enter_cost_purpose = findViewById(R.id.enter_cost_purpose);
         imageButton = findViewById(R.id.imageButton2);
-
-
-
-
+        purp_btn = findViewById(R.id.btn_add_purp);
 
         db = FirebaseFirestore.getInstance();
 
@@ -48,9 +47,13 @@ public class PurposeActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addPurpose();
-
                 finish();
+            }
+        });
+        purp_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addPurpose();
             }
         });
 
@@ -58,13 +61,12 @@ public class PurposeActivity extends AppCompatActivity {
 
 
     private void addPurpose() {
-        String name_purp, desc_purp ;
-        int  purp_meas, cost_purpose;
+        String name_purp, desc_purp;
+        int purp_meas, cost_purpose;
         name_purp = purpose_name.getText().toString();
         desc_purp = purpose_desc.getText().toString();
-        cost_purpose =  Integer.parseInt(enter_cost_purpose.getText().toString());
+        cost_purpose = Integer.parseInt(enter_cost_purpose.getText().toString());
         purp_meas = Integer.parseInt(measure_purpose.getText().toString());
-
 
 
         // Создание мапы с данными для добавления

@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -40,7 +39,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         // taking FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance();
-
 
 
         // initialising all views through id defined above

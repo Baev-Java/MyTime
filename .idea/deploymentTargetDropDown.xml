@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="PurposeActivity">
+        <State />
+      </entry>
       <entry key="RegistrationActivity">
         <State />
       </entry>

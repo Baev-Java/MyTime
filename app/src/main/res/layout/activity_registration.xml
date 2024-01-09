@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Linear Layout with vertical orientation and other properties -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http:// schemas.android.com/apk/res-auto"
     xmlns:app2="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http:// schemas.android.com/tools"

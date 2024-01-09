@@ -12,6 +12,18 @@
     <string name="name_purpose">Название</string>
     <string name="desc_purpose">Описание</string>
     <string name="add_purpose">Добавить цель</string>
-    <string name="how_cost_purpose">Сколько средств вы готовы затрачивать</string>
+    <string name="how_cost_purpose">Сколько Вы готовы затрачивать</string>
     <string name="maggure_purpose">Мера для достижения</string>
+
+
+    <string name="open_app_usage_setting">Open Apps with usage access settings</string>
+    <string name="last_time_used">"Last time used: "</string>
+    <string name="time_span">"Time span: "</string>
+
+    <string name="display_order_text">Sort by:</string>
+    <string name="app_name_label">App</string>
+    <string name="last_time_used_label">Last time used</string>
+    <!-- label for usage time -->
+    <string name="usage_time_label">Usage time</string>
+
 </resources>
