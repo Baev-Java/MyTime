@@ -4,10 +4,24 @@ import android.app.Activity;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.text.format.DateUtils;
+import android.util.ArrayMap;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -16,19 +30,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-
-import android.text.format.DateUtils;
-import android.util.ArrayMap;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 /**
  * Activity to display package usage statistics.
@@ -41,6 +42,47 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
     private UsageStatsAdapter mAdapter;
     private PackageManager mPm;
 
+    private void requestPermissions() {
+        List<UsageStats> stats = mUsageStatsManager
+                .queryUsageStats(UsageStatsManager.INTERVAL_DAILY, 0, System.currentTimeMillis());
+        boolean isEmpty = stats.isEmpty();
+        if (isEmpty) {
+            startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+        }
+    }
+
+    /**
+     * Called when the activity is first created.
+     */
+    @Override
+    protected void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        setContentView(R.layout.activity_app_stat);
+
+
+        mUsageStatsManager = (UsageStatsManager) getSystemService(Context.USAGE_STATS_SERVICE);
+        requestPermissions();
+        mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mPm = getPackageManager();
+
+        Spinner typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
+        typeSpinner.setOnItemSelectedListener(this);
+
+        ListView listView = (ListView) findViewById(R.id.pkg_list);
+        mAdapter = new UsageStatsAdapter();
+        listView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        mAdapter.sortList(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // do nothing
+    }
+
     public static class AppNameComparator implements Comparator<UsageStats> {
         private Map<String, String> mAppLabelList;
 
@@ -52,6 +94,8 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
         public final int compare(UsageStats a, UsageStats b) {
             String alabel = mAppLabelList.get(a.getPackageName());
             String blabel = mAppLabelList.get(b.getPackageName());
+            assert alabel != null;
+            assert blabel != null;
             return alabel.compareTo(blabel);
         }
     }
@@ -60,14 +104,14 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
         @Override
         public final int compare(UsageStats a, UsageStats b) {
             // return by descending order
-            return (int)(b.getLastTimeUsed() - a.getLastTimeUsed());
+            return (int) (b.getLastTimeUsed() - a.getLastTimeUsed());
         }
     }
 
     public static class UsageTimeComparator implements Comparator<UsageStats> {
         @Override
         public final int compare(UsageStats a, UsageStats b) {
-            return (int)(b.getTotalTimeInForeground() - a.getTotalTimeInForeground());
+            return (int) (b.getTotalTimeInForeground() - a.getTotalTimeInForeground());
         }
     }
 
@@ -83,21 +127,19 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
         private static final int _DISPLAY_ORDER_USAGE_TIME = 0;
         private static final int _DISPLAY_ORDER_LAST_TIME_USED = 1;
         private static final int _DISPLAY_ORDER_APP_NAME = 2;
-
+        private final ArrayMap<String, String> mAppLabelMap = new ArrayMap<>();
+        private final ArrayList<UsageStats> mPackageStats = new ArrayList<>();
         private int mDisplayOrder = _DISPLAY_ORDER_USAGE_TIME;
         private LastTimeUsedComparator mLastTimeUsedComparator = new LastTimeUsedComparator();
         private UsageTimeComparator mUsageTimeComparator = new UsageTimeComparator();
         private AppNameComparator mAppLabelComparator;
-        private final ArrayMap<String, String> mAppLabelMap = new ArrayMap<>();
-        private final ArrayList<UsageStats> mPackageStats = new ArrayList<>();
 
         UsageStatsAdapter() {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DAY_OF_YEAR, -5);
 
-            final List<UsageStats> stats =
-                    mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST,
-                            cal.getTimeInMillis(), System.currentTimeMillis());
+            final List<UsageStats> stats = mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, 0, System.currentTimeMillis());
+
             if (stats == null) {
                 return;
             }
@@ -147,6 +189,15 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
             return position;
         }
 
+        private void requestPermissions() {
+            List<UsageStats> stats = mUsageStatsManager
+                    .queryUsageStats(UsageStatsManager.INTERVAL_DAILY, 0, System.currentTimeMillis());
+            boolean isEmpty = stats.isEmpty();
+            if (isEmpty) {
+                startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+            }
+        }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // A ViewHolder keeps references to children views to avoid unneccessary calls
@@ -192,9 +243,10 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
                 // do nothing
                 return;
             }
-            mDisplayOrder= sortOrder;
+            mDisplayOrder = sortOrder;
             sortList();
         }
+
         private void sortList() {
             if (mDisplayOrder == _DISPLAY_ORDER_USAGE_TIME) {
                 if (localLOGV) Log.i(TAG, "Sorting by usage time");
@@ -208,33 +260,7 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
             }
             notifyDataSetChanged();
         }
+
     }
 
-    /** Called when the activity is first created. */
-    @Override
-    protected void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-        setContentView(R.layout.activity_app_stat);
-
-        mUsageStatsManager = (UsageStatsManager) getSystemService(Context.USAGE_STATS_SERVICE);
-        mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPm = getPackageManager();
-
-        Spinner typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
-        typeSpinner.setOnItemSelectedListener(this);
-
-        ListView listView = (ListView) findViewById(R.id.pkg_list);
-        mAdapter = new UsageStatsAdapter();
-        listView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        mAdapter.sortList(position);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // do nothing
-    }
 }

@@ -14,7 +14,7 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -40,7 +40,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-auth")
-
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    implementation 'com.android.support:multidex:1.0.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.5'
+
 }

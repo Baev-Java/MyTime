@@ -25,5 +25,6 @@
     <string name="last_time_used_label">Last time used</string>
     <!-- label for usage time -->
     <string name="usage_time_label">Usage time</string>
+    <string name="welcome">Добро пожаловать!</string>
 
 </resources>

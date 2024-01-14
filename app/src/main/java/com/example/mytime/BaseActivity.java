@@ -4,47 +4,43 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+
 
 public class BaseActivity extends AppCompatActivity {
 
-    private RadioGroup radioGroup;
-    private FloatingActionButton btn_purpose;
-    private RadioButton radioButton;
-    private Button btnn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        ProgressBar progr = findViewById(R.id.day);
+        FloatingActionButton btn_purpose = findViewById(R.id.btn_purpose);
+        Button btnn = findViewById(R.id.buttonnn);
+        TextView lastDay = findViewById(R.id.last_day);
 
-        btn_purpose = findViewById(R.id.btn_purpose);
-        radioButton = findViewById(R.id.btn_completed);
-        btnn = findViewById(R.id.buttonnn);
+        LocalTime current = LocalTime.now();
+        long millis = ChronoUnit.MILLIS.between(current, LocalTime.MAX);
+        int progres = (int)((millis * 100) / 86400000)*4;
+        String hours = String.valueOf((int) (millis / 3600000));
+        String minutes = String.valueOf((int) ((millis - (Integer.parseInt(hours) * 3600000)) / 60000));
 
-        radioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(BaseActivity.this, "click", Toast.LENGTH_SHORT).show();
-            }
-        });
+        String timee = "До конца дня осталось: " + hours + "ч" + ":" + minutes + "мин";
+        lastDay.setText(timee);
 
-        btn_purpose.setOnClickListener(new View.OnClickListener() {//обработчик кнопки создания цели
-            @Override
-            public void onClick(View view) {
-                // Создание мапы с данными для добавления
-                Intent intent = new Intent(BaseActivity.this, PurposeActivity.class);
-                startActivity(intent);
-            }
-        });
+
+        lastDay.setText(timee);
+        progr.setProgress(progres);
+
+
         btnn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
