@@ -14,6 +14,7 @@ import android.text.format.DateUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,6 +23,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -41,6 +46,7 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
     private LayoutInflater mInflater;
     private UsageStatsAdapter mAdapter;
     private PackageManager mPm;
+
 
     private void requestPermissions() {
         List<UsageStats> stats = mUsageStatsManager
@@ -71,6 +77,39 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
         ListView listView = (ListView) findViewById(R.id.pkg_list);
         mAdapter = new UsageStatsAdapter();
         listView.setAdapter(mAdapter);
+
+        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
+
+        // Set Home selected
+        bottomNavigationView.setSelectedItemId(R.id.sceen_time);
+
+        // Perform item selected listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId())
+                {
+                    case R.id.sceen_time:
+                        startActivity(new Intent(getApplicationContext(),AppStatActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.habit:
+                        startActivity(new Intent(getApplicationContext(),HabbitActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),BaseActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.purpose:
+                        startActivity(new Intent(getApplicationContext(),PurposeListActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
