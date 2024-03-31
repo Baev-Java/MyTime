@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".HabbitActivity">
 
+    <TextView
+
+        android:id="@+id/some_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/txt_habit"
+        android:textAppearance="@style/register"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -15,6 +32,104 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_app_bar" />
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+
+
+
+    <View
+        android:id="@+id/rectangle_2"
+        android:layout_width="286.25dp"
+        android:layout_height="60.97dp"
+        android:layout_marginTop="128dp"
+        android:background="@drawable/rectangle_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frame_27"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/rectangle_2"
+        app:layout_constraintTop_toTopOf="@+id/rectangle_2">
+
+        <View
+            android:id="@+id/monday"
+            android:layout_width="9.83dp"
+            android:layout_height="9.83dp"
+            android:background="@drawable/ellipse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/tuesday"
+            android:layout_width="9.83dp"
+            android:layout_height="9.83dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/ellipse"
+            app:layout_constraintStart_toEndOf="@+id/monday"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/thursday"
+            android:layout_width="9.83dp"
+            android:layout_height="9.83dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/ellipse"
+            app:layout_constraintStart_toEndOf="@+id/friday"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/friday"
+            android:layout_width="9.83dp"
+
+            android:layout_height="9.83dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/ellipse"
+            app:layout_constraintStart_toEndOf="@+id/saturday"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/saturday"
+            android:layout_width="9.83dp"
+            android:layout_height="9.83dp"
+            android:background="@drawable/ellipse"
+            app:layout_constraintStart_toEndOf="@+id/Tuesday"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/wednesday"
+            android:layout_width="9.83dp"
+            android:layout_height="9.83dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/ellipse"
+            app:layout_constraintStart_toEndOf="@+id/tuesday"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <View
+            android:id="@+id/Tuesday"
+            android:layout_width="9.83dp"
+            android:layout_height="9.83dp"
+            android:background="@drawable/ellipse"
+            app:layout_constraintStart_toEndOf="@+id/wednesday"
+            tools:layout_editor_absoluteY="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="36dp"
+        android:text="Бег по утрам"
+        app:layout_constraintEnd_toStartOf="@+id/frame_27"
+        app:layout_constraintTop_toTopOf="@+id/rectangle_2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

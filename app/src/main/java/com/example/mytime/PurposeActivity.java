@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class PurposeActivity extends AppCompatActivity {
 
-    FirebaseFirestore db;
+    private FirebaseFirestore db;
     private EditText purpose_name;
 
     private EditText purpose_desc;
@@ -54,6 +54,7 @@ public class PurposeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addPurpose();
+                onBackPressed();
             }
         });
 

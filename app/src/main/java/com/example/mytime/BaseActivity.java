@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -26,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         ProgressBar progr = findViewById(R.id.day);
-        FloatingActionButton btn_purpose = findViewById(R.id.btn_purpose);
+
         Button btnn = findViewById(R.id.buttonnn);
         TextView lastDay = findViewById(R.id.last_day);
 
@@ -70,6 +69,10 @@ public class BaseActivity extends AppCompatActivity {
                         return true;
                     case R.id.purpose:
                         startActivity(new Intent(getApplicationContext(),PurposeListActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(),UserActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

@@ -106,6 +106,10 @@ public class AppStatActivity extends Activity implements OnItemSelectedListener 
                         startActivity(new Intent(getApplicationContext(),PurposeListActivity.class));
                         overridePendingTransition(0,0);
                         return true;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(),UserActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
                 return false;
             }

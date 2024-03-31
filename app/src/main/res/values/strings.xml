@@ -26,5 +26,6 @@
     <!-- label for usage time -->
     <string name="usage_time_label">Usage time</string>
     <string name="welcome">Добро пожаловать!</string>
+    <string name="txt_habit">Трекер привычек</string>
 
 </resources>
